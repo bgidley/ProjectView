@@ -6,6 +6,8 @@
 
     <p>${message:greeting}</p>
 
+    <div t:type="MessageList"></div>
+
     <p:sidebar>
 
         <p>
