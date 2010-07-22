@@ -11,6 +11,7 @@ import org.apache.tapestry5.services.Response;
 import uk.co.gidley.projectView.dao.StatusXmppMessage;
 
 import java.io.IOException;
+import java.util.Date;
 
 /**
  * Created by IntelliJ IDEA. User: ben Date: Jul 21, 2010 Time: 9:01:06 PM
@@ -39,6 +40,7 @@ public class XmppDispatcher implements Dispatcher {
 
 			StatusXmppMessage statusXmppMessage = new StatusXmppMessage();
 			statusXmppMessage.setMessage(body);
+			statusXmppMessage.setRecieved(new Date());
 			persistanceManager.getPmfInstance().getPersistenceManager().makePersistent(statusXmppMessage);
 			
 			return true;

@@ -22,6 +22,7 @@ public class MessageList {
 	public List<String> getMessages() {
 		Query query = persistanceManager.getPmfInstance().getPersistenceManager().newQuery(StatusXmppMessage.class);
 
+		query.setOrdering("recieved");
 		return (List<String>) query.execute();
 
 	}
