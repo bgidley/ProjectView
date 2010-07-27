@@ -10,6 +10,7 @@ import org.apache.tapestry5.services.RequestGlobals;
 import org.apache.tapestry5.services.Response;
 import uk.co.gidley.projectView.dao.StatusXmppMessage;
 
+import javax.jdo.PersistenceManager;
 import java.io.IOException;
 import java.util.Date;
 
@@ -19,9 +20,9 @@ import java.util.Date;
 public class XmppDispatcher implements Dispatcher {
 	private RequestGlobals requestGlobals;
 
-	private PersistanceManager persistanceManager;
+	private PersistenceManager persistanceManager;
 
-	public XmppDispatcher(RequestGlobals requestGlobals, PersistanceManager persistanceManager){
+	public XmppDispatcher(RequestGlobals requestGlobals, PersistenceManager persistanceManager){
 		this.requestGlobals = requestGlobals;
 		this.persistanceManager = persistanceManager;
 	}
@@ -41,7 +42,7 @@ public class XmppDispatcher implements Dispatcher {
 			StatusXmppMessage statusXmppMessage = new StatusXmppMessage();
 			statusXmppMessage.setMessage(body);
 			statusXmppMessage.setRecieved(new Date());
-			persistanceManager.getPmfInstance().getPersistenceManager().makePersistent(statusXmppMessage);
+			persistanceManager.makePersistent(statusXmppMessage);
 			
 			return true;
 		}

@@ -4,17 +4,16 @@ import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManagerFactory;
 
 /**
- * Created by IntelliJ IDEA. User: ben Date: Jul 21, 2010 Time: 9:17:58 PM
+ * Created by IntelliJ IDEA. User: ben Date: Jul 27, 2010 Time: 9:19:59 PM
  */
-public class PersistanceManager {
+public class PersistenceManagerSource {
 
 	private final PersistenceManagerFactory pmfInstance;
 
-	public PersistanceManager() {
+	public PersistenceManagerSource() {
 		pmfInstance =
 				JDOHelper.getPersistenceManagerFactory("transactions-optional");
 	}
-
 
 	public PersistenceManagerFactory getPmfInstance() {
 		return pmfInstance;

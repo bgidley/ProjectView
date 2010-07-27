@@ -3,8 +3,8 @@ package uk.co.gidley.projectView.components;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import uk.co.gidley.projectView.dao.StatusXmppMessage;
-import uk.co.gidley.projectView.services.PersistanceManager;
 
+import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import java.util.List;
 
@@ -17,10 +17,10 @@ public class MessageList {
 	private String message;
 
 	@Inject
-	private PersistanceManager persistanceManager;
+	private PersistenceManager persistenceManager;
 
 	public List<String> getMessages() {
-		Query query = persistanceManager.getPmfInstance().getPersistenceManager().newQuery(StatusXmppMessage.class);
+		Query query = persistenceManager.newQuery(StatusXmppMessage.class);
 
 		query.setOrdering("recieved");
 		return (List<String>) query.execute();
