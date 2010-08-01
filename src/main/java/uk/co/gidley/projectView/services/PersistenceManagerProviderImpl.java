@@ -7,11 +7,11 @@ import javax.jdo.PersistenceManager;
 /**
  * Created by IntelliJ IDEA. User: ben Date: Jul 21, 2010 Time: 9:17:58 PM
  */
-public class PersistenceManagerImpl implements ThreadCleanupListener {
+public class PersistenceManagerProviderImpl implements ThreadCleanupListener, PersistenceManagerProvider {
 
 	private final PersistenceManager persistenceManager;
 
-	public PersistenceManagerImpl(PersistenceManagerSource persistenceManagerSource) {
+	public PersistenceManagerProviderImpl(PersistenceManagerSource persistenceManagerSource) {
 		persistenceManager = persistenceManagerSource.getPmfInstance().getPersistenceManager();
 	}
 

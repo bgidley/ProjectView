@@ -3,8 +3,10 @@ package uk.co.gidley.projectView.services;
 import org.apache.tapestry5.SymbolConstants;
 import org.apache.tapestry5.ioc.MappedConfiguration;
 import org.apache.tapestry5.ioc.OrderedConfiguration;
+import org.apache.tapestry5.ioc.ScopeConstants;
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Local;
+import org.apache.tapestry5.ioc.annotations.Scope;
 import org.apache.tapestry5.ioc.services.PerthreadManager;
 import org.apache.tapestry5.ioc.services.PropertyShadowBuilder;
 import org.apache.tapestry5.services.Dispatcher;
@@ -34,16 +36,17 @@ public class AppModule {
 		binder.bind(PersistenceManagerSource.class);
 	}
 
-	public static PersistenceManagerImpl buildPersistanceManagerImpl(PersistenceManagerSource persistenceManagerSource,
+	@Scope(ScopeConstants.PERTHREAD)
+	public static PersistenceManagerProvider buildPersistanceManagerImpl(PersistenceManagerSource persistenceManagerSource,
 			PerthreadManager perthreadManager) {
-		PersistenceManagerImpl persistenceManager = new PersistenceManagerImpl(persistenceManagerSource);
-		perthreadManager.addThreadCleanupListener(persistenceManager);
-		return persistenceManager;
+		PersistenceManagerProviderImpl persistenceManagerProvider = new PersistenceManagerProviderImpl(persistenceManagerSource);
+		perthreadManager.addThreadCleanupListener(persistenceManagerProvider);
+		return persistenceManagerProvider;
 	}
 
-	public static PersistenceManager buildPersistanceManager(PersistenceManagerImpl persistenceManager,
+	public static PersistenceManager buildPersistanceManager(PersistenceManagerProvider persistenceManagerProvider,
 			PropertyShadowBuilder propertyShadowBuilder) {
-		return propertyShadowBuilder.build(persistenceManager, "persistenceManager", PersistenceManager.class);
+		return propertyShadowBuilder.build(persistenceManagerProvider, "PersistenceManager", PersistenceManager.class);
 	}
 
 
