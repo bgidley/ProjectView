@@ -1,0 +1,7 @@
+<queue-entries>
+    <queue>
+        <name>buildProcessing</name>
+        <rate>1/m</rate>
+        <bucket-size>10</bucket-size>
+    </queue>
+</queue-entries>

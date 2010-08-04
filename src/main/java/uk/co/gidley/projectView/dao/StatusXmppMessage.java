@@ -23,6 +23,7 @@ public class StatusXmppMessage {
 
 	@Persistent
 	private Date recieved;
+	public static final String RECIEVED = "recieved";
 
 	public String getMessage() {
 		return message;

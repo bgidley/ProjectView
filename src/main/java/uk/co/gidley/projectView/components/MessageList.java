@@ -22,7 +22,7 @@ public class MessageList {
 	public List<String> getMessages() {
 		Query query = persistenceManager.newQuery(StatusXmppMessage.class);
 
-		query.setOrdering("recieved");
+		query.setOrdering(StatusXmppMessage.RECIEVED + " desc");
 		return (List<String>) query.execute();
 
 	}
