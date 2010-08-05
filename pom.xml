@@ -29,6 +29,11 @@
             <version>${gae.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.google.appengine</groupId>
+            <artifactId>appengine-api-1.0-sdk</artifactId>
+            <version>${gae.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>com.google.appengine</groupId>
@@ -59,6 +64,12 @@
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-jpa</artifactId>
+            <version>${datanucleus.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.datanucleus</groupId>
+            <artifactId>datanucleus-core</artifactId>
             <version>${datanucleus.version}</version>
         </dependency>
 
