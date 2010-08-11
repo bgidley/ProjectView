@@ -1,5 +1,6 @@
 package uk.co.gidley.projectView.components;
 
+import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.labs.taskqueue.Queue;
 import com.google.appengine.api.labs.taskqueue.QueueFactory;
 import org.apache.tapestry5.ioc.annotations.Inject;
@@ -30,7 +31,7 @@ public class ReprocessMessages {
 		List<StatusXmppMessage> results = (List<StatusXmppMessage>) query.execute();
 
 		for (StatusXmppMessage statusXmppMessage : results) {
-			queue.add(url("/ProcessMessage").param(ProcessMessage.KEY, statusXmppMessage.getKey().toString()));
+			queue.add(url("/ProcessMessage").param(ProcessMessage.KEY, KeyFactory.keyToString(statusXmppMessage.getKey())));
 		}
 
 
