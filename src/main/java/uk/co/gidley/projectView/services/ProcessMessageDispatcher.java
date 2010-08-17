@@ -1,9 +1,11 @@
-package uk.co.gidley.projectView.pages;
+package uk.co.gidley.projectView.services;
 
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Link;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.services.Dispatcher;
 import org.apache.tapestry5.services.Request;
+import org.apache.tapestry5.services.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.co.gidley.projectView.dao.Build;
@@ -14,45 +16,51 @@ import uk.co.gidley.projectView.exceptions.UnparseableMessageException;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
+import java.io.IOException;
 import java.util.List;
 
 
 /**
  * Created by IntelliJ IDEA. User: ben Date: Aug 3, 2010 Time: 8:54:12 PM
  */
-public class ProcessMessage {
-	private static final Logger logger = LoggerFactory.getLogger(ProcessMessage.class);
+public class ProcessMessageDispatcher implements Dispatcher {
+	private static final Logger logger = LoggerFactory.getLogger(ProcessMessageDispatcher.class);
 
-	@Inject
-	private Request request;
 	public static final String KEY = "key";
 
 	@Inject
 	private PersistenceManager persistenceManager;
+	public static final String TASKS_PROCESS_MESSAGE = "/tasks/ProcessMessageDispatcher";
+	public static final String BUILD_PROCESSING = "buildProcessing";
 
 
-	public void onActivate() {
+	public boolean dispatch(Request request, Response response) throws IOException {
 
-		String key = (String) request.getParameter(KEY);
-		logger.debug("Key passed {}", key);
+		if (request.getPath().equals(TASKS_PROCESS_MESSAGE)) {
 
-		StatusXmppMessage statusXmppMessage = (StatusXmppMessage) persistenceManager.getObjectById(
-				StatusXmppMessage.class, KeyFactory.stringToKey(key));
+			String key = request.getParameter(KEY);
+			logger.debug("Key passed {}", key);
 
-		// parse message and create appropriate objects
+			StatusXmppMessage statusXmppMessage = (StatusXmppMessage) persistenceManager.getObjectById(
+					StatusXmppMessage.class, KeyFactory.stringToKey(key));
 
-		String message = statusXmppMessage.getMessage();
-		try {
-			String[] messages = message.split("\\.");
-			// should have n sections - message type, the rest
+			// parse message and create appropriate objects
+			String message = statusXmppMessage.getMessage();
+			try {
+				String[] messages = message.split("\\.");
+				// should have n sections - message type, the rest
 
-			if (messages.length >= 1) {
-				if (messages[0].equals("Build successful")) {
-					processSucessMessage(message);
+				if (messages.length >= 1) {
+					if (messages[0].equals("Build successful")) {
+						processSucessMessage(message);
+					}
 				}
+			} catch (UnparseableMessageException e) {
+				logger.warn("Unparseable Message:{}", e.getMessage());
 			}
-		} catch (UnparseableMessageException e) {
-			logger.warn("Unparseable Message:{}", e.getMessage());
+			return true;
+		} else {
+			return false;
 		}
 	}
 

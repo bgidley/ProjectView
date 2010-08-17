@@ -4,7 +4,11 @@
 <t:container xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
     <div>
         <h3>${build.buildName}</h3>
+
+        <p>Status: ${status}</p>
         <div t:type="loop" source="build.buildExecutions" value="buildExecution">
+
+
             <p:empty>
                 <p>There are no build executions to display;</p>
             </p:empty>

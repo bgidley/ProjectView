@@ -19,4 +19,16 @@ public class BuildList {
 	public Build getBuild() {
 		return build;
 	}
+
+	public String getStatus() {
+		if (build.getBuildExecutions().size() > 0) {
+			if (build.getBuildExecutions().get(0).isPassed()) {
+				return "Passed";
+			} else {
+				return "Failed";
+			}
+		} else {
+			return "Not yet executed";
+		}
+	}
 }

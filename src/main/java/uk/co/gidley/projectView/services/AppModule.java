@@ -35,6 +35,7 @@ public class AppModule {
 
 		binder.bind(XmppDispatcher.class);
 		binder.bind(PersistenceManagerSource.class);
+		binder.bind(ProcessMessageDispatcher.class);
 	}
 
 	@Scope(ScopeConstants.PERTHREAD)
@@ -81,8 +82,9 @@ public class AppModule {
 	}
 
 	public static void contributeMasterDispatcher(OrderedConfiguration<Dispatcher> configuration,
-			XmppDispatcher xmppDispatcher) {
+			XmppDispatcher xmppDispatcher, ProcessMessageDispatcher processMessageDispatcher) {
 		configuration.add("XmppDispatcher", xmppDispatcher, "before:Asset");
+		configuration.add("ProcessMessageDispatcher", processMessageDispatcher, "before:Asset");
 	}
 
 

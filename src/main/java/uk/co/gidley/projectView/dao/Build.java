@@ -25,7 +25,7 @@ public class Build {
 	private String buildName;
 
 	@Persistent
-	@Order(extensions = @Extension(vendorName="datanucleus", key="list-ordering", value="buildNumber asc"))
+	@Order(extensions = @Extension(vendorName = "datanucleus", key = "list-ordering", value = "buildNumber desc"))
 	private List<BuildExecution> buildExecutions;
 
 	public String getBuildName() {

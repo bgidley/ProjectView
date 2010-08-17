@@ -10,7 +10,7 @@ public class ProcessMessageTest {
 	@Test
 	public void processSuccessMessage(){
 
-//		ProcessMessage processMessage = new ProcessMessage();
+//		ProcessMessageDispatcher processMessage = new ProcessMessageDispatcher();
 //		processMessage.onActivate();
 	}
 }

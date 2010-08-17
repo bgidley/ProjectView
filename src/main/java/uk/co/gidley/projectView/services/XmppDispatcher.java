@@ -10,9 +10,7 @@ import org.apache.tapestry5.services.Dispatcher;
 import org.apache.tapestry5.services.Request;
 import org.apache.tapestry5.services.RequestGlobals;
 import org.apache.tapestry5.services.Response;
-import uk.co.gidley.projectView.components.ReprocessMessages;
 import uk.co.gidley.projectView.dao.StatusXmppMessage;
-import uk.co.gidley.projectView.pages.ProcessMessage;
 
 import javax.jdo.PersistenceManager;
 import java.io.IOException;
@@ -48,8 +46,8 @@ public class XmppDispatcher implements Dispatcher {
 			statusXmppMessage.setRecieved(new Date());
 			persistanceManager.makePersistent(statusXmppMessage);
 
-			Queue queue = QueueFactory.getQueue(ReprocessMessages.BUILD_PROCESSING);
-			queue.add(url("/ProcessMessage").param(ProcessMessage.KEY,
+			Queue queue = QueueFactory.getQueue(ProcessMessageDispatcher.BUILD_PROCESSING);
+			queue.add(url(ProcessMessageDispatcher.TASKS_PROCESS_MESSAGE).param(ProcessMessageDispatcher.KEY,
 					KeyFactory.keyToString(statusXmppMessage.getKey())));
 
 			return true;
