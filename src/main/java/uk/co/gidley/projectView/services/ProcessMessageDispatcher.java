@@ -52,7 +52,9 @@ public class ProcessMessageDispatcher implements Dispatcher {
 
 				if (messages.length >= 1) {
 					if (messages[0].equals("Build successful")) {
-						processSucessMessage(message);
+						processSucessMessage(message, true);
+					} else if (messages[0].equals("Build failed")) {
+						processSucessMessage(message, false);
 					}
 				}
 			} catch (UnparseableMessageException e) {
@@ -64,14 +66,14 @@ public class ProcessMessageDispatcher implements Dispatcher {
 		}
 	}
 
-	private void processSucessMessage(String message) throws UnparseableMessageException {
+	private void processSucessMessage(String message, Boolean passed) throws UnparseableMessageException {
 
 		String[] splitForPeriod = message.split("\\.");
 
 		if (splitForPeriod.length > 2) {
 			// Find the build name
 			String[] splitForComma = message.split(",");
-			if (splitForComma.length == 2) {
+			if (splitForComma.length == 2 || splitForComma.length == 3) {
 				// splitForComma [0] is BUILDGROUP::BUILDNAME #BUILDNUMBER
 				String buildGroupName = splitForComma[0].substring(splitForComma[0].indexOf("\n") + 1,
 						splitForComma[0].indexOf("::"));
@@ -79,12 +81,18 @@ public class ProcessMessageDispatcher implements Dispatcher {
 						splitForComma[0].indexOf("#") - 1);
 				int buildNumber = Integer.valueOf(splitForComma[0].substring(splitForComma[0].indexOf("#") + 1,
 						splitForComma[0].length()));
-				Link link = new Link(
-						splitForComma[1].substring(splitForComma[1].indexOf("http"), splitForComma[1].length()));
+				Link link;
+				if (splitForComma.length == 2) {
+					link = new Link(
+							splitForComma[1].substring(splitForComma[1].indexOf("http"), splitForComma[1].length()));
+				} else {
+					link = new Link(
+							splitForComma[2].substring(splitForComma[2].indexOf("http"), splitForComma[2].length()));
+				}
 
 				BuildGroup buildGroup = createUpdateBuildGroup(buildGroupName);
 				Build build = createUpdateBuild(message, buildName, buildGroup);
-				createUpdateBuildExecution(buildNumber, link, build);
+				createUpdateBuildExecution(buildNumber, link, build, passed);
 			} else {
 				throw new UnparseableMessageException(message);
 			}
@@ -93,7 +101,7 @@ public class ProcessMessageDispatcher implements Dispatcher {
 		}
 	}
 
-	private void createUpdateBuildExecution(int buildNumber, Link link, Build build) {
+	private void createUpdateBuildExecution(int buildNumber, Link link, Build build, Boolean passed) {
 		boolean found = false;
 		for (BuildExecution buildExecution : build.getBuildExecutions()) {
 			if (buildExecution.getBuildNumber() == buildNumber) {
@@ -103,7 +111,7 @@ public class ProcessMessageDispatcher implements Dispatcher {
 		if (!found) {
 			BuildExecution buildExecution = new BuildExecution();
 			buildExecution.setBuildNumber(buildNumber);
-			buildExecution.setPassed(true);
+			buildExecution.setPassed(passed);
 			buildExecution.setBuildLink(link);
 			build.getBuildExecutions().add(buildExecution);
 		}
