@@ -65,7 +65,8 @@ public class ProcessMessage {
 			String[] splitForComma = message.split(",");
 			if (splitForComma.length == 2) {
 				// splitForComma [0] is BUILDGROUP::BUILDNAME #BUILDNUMBER
-				String buildGroupName = splitForComma[0].substring(splitForComma[0].indexOf("\n")+1, splitForComma[0].indexOf("::"));
+				String buildGroupName = splitForComma[0].substring(splitForComma[0].indexOf("\n") + 1,
+						splitForComma[0].indexOf("::"));
 				String buildName = splitForComma[0].substring(splitForComma[0].indexOf("::") + 2,
 						splitForComma[0].indexOf("#") - 1);
 				int buildNumber = Integer.valueOf(splitForComma[0].substring(splitForComma[0].indexOf("#") + 1,
@@ -86,7 +87,7 @@ public class ProcessMessage {
 
 	private void createUpdateBuildExecution(int buildNumber, Link link, Build build) {
 		boolean found = false;
-		for (BuildExecution buildExecution : build.getBuilds()) {
+		for (BuildExecution buildExecution : build.getBuildExecutions()) {
 			if (buildExecution.getBuildNumber() == buildNumber) {
 				found = true;
 			}
@@ -96,6 +97,7 @@ public class ProcessMessage {
 			buildExecution.setBuildNumber(buildNumber);
 			buildExecution.setPassed(true);
 			buildExecution.setBuildLink(link);
+			build.getBuildExecutions().add(buildExecution);
 		}
 	}
 
@@ -129,7 +131,7 @@ public class ProcessMessage {
 
 	private BuildGroup createUpdateBuildGroup(String buildGroupName) {
 		// Update with this messages status
-		Query query = persistenceManager.newQuery(BuildGroup.class, 
+		Query query = persistenceManager.newQuery(BuildGroup.class,
 				"buildGroup == buildGroupParam");
 		List<BuildGroup> buildGroupList = (List<BuildGroup>) query.execute(buildGroupName);
 		BuildGroup buildGroup;

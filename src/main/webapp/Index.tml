@@ -6,7 +6,7 @@
 
     <p>${message:greeting}</p>
 
-    <div t:type="MessageList"></div>
+    <div t:type="BuildGroupList"></div>
 
     <p:sidebar>
 

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<t:container xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
+    <div>
+        <t:loop source="buildGroups" value="buildGroup">
+            <div><h2>${buildGroup.buildGroup}</h2>
+                <t:loop source="buildGroup.builds" value="build">
+                    <t:BuildList build="build"/>
+                </t:loop>
+            </div>
+
+            <p:empty>
+              <p>There are no build groups to display;</p>
+            </p:empty>
+        </t:loop>
+    </div>
+</t:container>

@@ -26,7 +26,7 @@ public class Build {
 
 	@Persistent
 	@Order(extensions = @Extension(vendorName="datanucleus", key="list-ordering", value="buildNumber asc"))
-	private List<BuildExecution> builds;
+	private List<BuildExecution> buildExecutions;
 
 	public String getBuildName() {
 		return buildName;
@@ -36,12 +36,12 @@ public class Build {
 		this.buildName = buildName;
 	}
 
-	public List<BuildExecution> getBuilds() {
-		return builds;
+	public List<BuildExecution> getBuildExecutions() {
+		return buildExecutions;
 	}
 
-	public void setBuilds(List<BuildExecution> builds) {
-		this.builds = builds;
+	public void setBuildExecutions(List<BuildExecution> buildExecutions) {
+		this.buildExecutions = buildExecutions;
 	}
 
 	public Key getKey() {

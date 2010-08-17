@@ -16,6 +16,8 @@ import java.util.List;
 @PersistenceCapable
 public class BuildGroup {
 
+	public static final String BUILD_GROUP = "buildGroup";
+
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
 	private Key key;
