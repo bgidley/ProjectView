@@ -105,6 +105,7 @@ public class ProcessMessage {
 			BuildGroup buildGroup) throws UnparseableMessageException {
 		Query buildNameQuery = persistenceManager.newQuery(Build.class,
 				"buildName == buildNameParam");
+		buildNameQuery.declareParameters("String buildNameParam");
 		List<Build> builds = (List<Build>) buildNameQuery.execute(buildName);
 		Build build = null;
 		if (builds.size() == 1) {
@@ -131,8 +132,9 @@ public class ProcessMessage {
 
 	private BuildGroup createUpdateBuildGroup(String buildGroupName) {
 		// Update with this messages status
-		Query query = persistenceManager.newQuery(BuildGroup.class,
-				"buildGroup == buildGroupParam");
+		Query query = persistenceManager.newQuery(BuildGroup.class);
+		query.setFilter("buildGroup == buildGroupParam");
+		query.declareParameters("String buildGroupParam");
 		List<BuildGroup> buildGroupList = (List<BuildGroup>) query.execute(buildGroupName);
 		BuildGroup buildGroup;
 		if (buildGroupList.size() == 1) {
