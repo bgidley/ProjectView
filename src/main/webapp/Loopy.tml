@@ -1,0 +1,32 @@
+<html t:type="layout" title="ProjectView Index"
+      t:sidebarTitle="Current Time"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+<!-- Most of the page content, including <head>, <body>, etc. tags, comes from Layout.tml -->
+
+<p>${message:greeting}</p>
+
+<t:form t:id="itemsForm">
+
+    <t:loop source="items" value="item" formState="ITERATION">
+        <t:textfield value="item"></t:textfield>
+    </t:loop>
+    
+    <t:submit/>
+</t:form>
+
+<p:sidebar>
+
+    <p>
+        Just to prove this is live:
+    </p>
+
+    <p>
+        [
+        <t:pagelink page="Loopy">refresh</t:pagelink>
+        ]
+    </p>
+
+</p:sidebar>
+
+</html>

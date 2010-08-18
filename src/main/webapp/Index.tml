@@ -20,10 +20,6 @@
         <p>
             [<t:pagelink page="Index">refresh</t:pagelink>]
         </p>
-
-        <p>
-            <t:ReprocessMessages/>
-        </p>
     </p:sidebar>
 
 </html>
