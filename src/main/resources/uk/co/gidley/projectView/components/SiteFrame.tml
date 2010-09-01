@@ -1,0 +1,5 @@
+<div xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
+    <div>
+        <iframe id="${clientId}" class="hidden" src="${site.link}"></iframe>
+    </div>
+</div>

@@ -1,0 +1,8 @@
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" t:type="layout" title="Edit A Site">
+<p>
+    <t:beaneditform object="site">
+      
+    </t:beaneditform>
+
+</p>
+</html>

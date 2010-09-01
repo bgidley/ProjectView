@@ -15,18 +15,5 @@
     <t:submit/>
 </t:form>
 
-<p:sidebar>
-
-    <p>
-        Just to prove this is live:
-    </p>
-
-    <p>
-        [
-        <t:pagelink page="Loopy">refresh</t:pagelink>
-        ]
-    </p>
-
-</p:sidebar>
 
 </html>

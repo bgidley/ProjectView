@@ -1,5 +1,7 @@
 package uk.co.gidley.projectView.services;
 
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 import org.apache.tapestry5.SymbolConstants;
 import org.apache.tapestry5.ioc.Configuration;
 import org.apache.tapestry5.ioc.MappedConfiguration;
@@ -8,6 +10,8 @@ import org.apache.tapestry5.ioc.ScopeConstants;
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Local;
 import org.apache.tapestry5.ioc.annotations.Scope;
+import org.apache.tapestry5.ioc.services.Coercion;
+import org.apache.tapestry5.ioc.services.CoercionTuple;
 import org.apache.tapestry5.ioc.services.PerthreadManager;
 import org.apache.tapestry5.ioc.services.PropertyShadowBuilder;
 import org.apache.tapestry5.services.Dispatcher;
@@ -55,7 +59,7 @@ public class AppModule {
 
 	public static void contributeIgnoredPathsFilter(Configuration<String> configuration) {
 		configuration.add("/remoteApi.*");
-		configuration.add("/_ah/.*");
+		configuration.add("/_ah/[^'xmpp'].+");
 	}
 
 
@@ -141,5 +145,23 @@ public class AppModule {
 		// within the pipeline.
 
 		configuration.add("Timing", filter);
+	}
+
+	public static void contributeTypeCoercer(Configuration<CoercionTuple> configuration) {
+		Coercion<String, Key> stringKeyCoercion = new Coercion<String, Key>() {
+			public Key coerce(String input) {
+				return KeyFactory.stringToKey(input);
+			}
+		};
+
+		configuration.add(new CoercionTuple<String, Key>(String.class, Key.class, stringKeyCoercion));
+
+		Coercion<Key, String> keyStringCoercion = new Coercion<Key, String>() {
+			public String coerce(Key input) {
+				return KeyFactory.keyToString(input);
+			}
+		};
+
+		configuration.add(new CoercionTuple<Key, String>(Key.class, String.class, keyStringCoercion));
 	}
 }
