@@ -2,7 +2,9 @@ package uk.co.gidley.projectView.services;
 
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
+import com.google.appengine.api.datastore.Link;
 import org.apache.tapestry5.SymbolConstants;
+import org.apache.tapestry5.Translator;
 import org.apache.tapestry5.ioc.Configuration;
 import org.apache.tapestry5.ioc.MappedConfiguration;
 import org.apache.tapestry5.ioc.OrderedConfiguration;
@@ -14,12 +16,14 @@ import org.apache.tapestry5.ioc.services.Coercion;
 import org.apache.tapestry5.ioc.services.CoercionTuple;
 import org.apache.tapestry5.ioc.services.PerthreadManager;
 import org.apache.tapestry5.ioc.services.PropertyShadowBuilder;
+import org.apache.tapestry5.services.BeanBlockContribution;
 import org.apache.tapestry5.services.Dispatcher;
 import org.apache.tapestry5.services.Request;
 import org.apache.tapestry5.services.RequestFilter;
 import org.apache.tapestry5.services.RequestHandler;
 import org.apache.tapestry5.services.Response;
 import org.slf4j.Logger;
+import uk.co.gidley.projectView.services.translators.LinkTranslator;
 
 import javax.jdo.PersistenceManager;
 import java.io.IOException;
@@ -163,5 +167,17 @@ public class AppModule {
 		};
 
 		configuration.add(new CoercionTuple<Key, String>(Key.class, String.class, keyStringCoercion));
+	}
+
+	public static void contributeDefaultDataTypeAnalyzer(MappedConfiguration<Class, String> configuration) {
+		configuration.add(Link.class, "link");
+	}
+
+	public static void contributeBeanBlockSource(Configuration<BeanBlockContribution> configuration) {
+		configuration.add(new BeanBlockContribution("link", "LinkPropertyEditBlock", "link", true));
+	}
+
+	public static void contributeTranslatorSource(MappedConfiguration<Class, Translator> configuration) {
+		configuration.add(Link.class, new LinkTranslator());
 	}
 }

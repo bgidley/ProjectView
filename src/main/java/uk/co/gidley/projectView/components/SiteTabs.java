@@ -6,6 +6,7 @@ import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SetupRender;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.services.javascript.InitializationPriority;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 import uk.co.gidley.projectView.dao.Site;
 
@@ -43,7 +44,8 @@ public class SiteTabs {
 	@SetupRender
 	private void setupRender(){
 		clientId = null;
-		renderSupport.addInitializerCall("initialiseSiteTabs", getClientId());
+		renderSupport.addInitializerCall(InitializationPriority.EARLY, "initialiseSiteTabs", getClientId());
+		renderSupport.addInitializerCall(InitializationPriority.LATE, "rotateSiteTabs", getClientId());
 	}
 
 	/**

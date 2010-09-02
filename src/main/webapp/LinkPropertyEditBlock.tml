@@ -1,0 +1,10 @@
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+
+
+<t:block id="link">
+    <t:label for="link">
+        <t:textfield t:id="link"></t:textfield>
+    </t:label>
+</t:block>
+</html>

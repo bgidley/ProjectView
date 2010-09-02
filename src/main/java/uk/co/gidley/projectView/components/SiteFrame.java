@@ -28,7 +28,7 @@ public class SiteFrame {
 	@Inject
 	private JavaScriptSupport renderSupport;
 
-	@Parameter
+	@Parameter(required = true)
 	private String tabsId;
 
 
@@ -37,7 +37,11 @@ public class SiteFrame {
 	@SetupRender
 	private void setupRender(){
 		clientId = null;
-		renderSupport.addInitializerCall("initialiseSiteFrame", new JSONObject(tabsId, getClientId()));
+
+		JSONObject parameters = new JSONObject();
+		parameters.put("clientId", getClientId());
+		parameters.put("tabsId", tabsId);
+		renderSupport.addInitializerCall("initialiseSiteFrame", parameters);
 	}
 
 	/**

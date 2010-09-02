@@ -1,7 +1,10 @@
-<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" t:type="layout" title="Edit A Site">
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" t:type="layout" title="Edit A Site" xmlns:p="tapestry:parameter">
 <p>
     <t:beaneditform object="site">
-      
+        <p:link>
+            <t:label for="link"/>
+            <t:textfield t:id="link" value="site.link"/>
+        </p:link>
     </t:beaneditform>
 
 </p>

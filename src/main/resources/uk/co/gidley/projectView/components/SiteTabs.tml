@@ -2,12 +2,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <t:container xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
-    <div id="${clientId}" t:type="loop" value="site" source="sites">
-        <div t:type="SiteFrame" t:site="site"/>
-        <p:empty>
-            <div id="${clientId}">
-                <p>No sites to display</p>
-            </div>
-        </p:empty>
+    <div id="${clientId}">
+        <t:loop value="site" source="sites">
+            <t:SiteFrame t:site="site" tabsId="clientId"/>
+            <p:empty>
+                <div>
+                    <p>No sites to display</p>
+                </div>
+            </p:empty>
+        </t:loop>
     </div>
 </t:container>
