@@ -64,6 +64,7 @@ public class AppModule {
 	public static void contributeIgnoredPathsFilter(Configuration<String> configuration) {
 		configuration.add("/remoteApi.*");
 		configuration.add("/_ah/[^'xmpp'].+");
+		configuration.add("/appstats.*");
 	}
 
 
