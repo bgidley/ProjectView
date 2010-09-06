@@ -1,9 +1,11 @@
 package uk.co.gidley.projectView.components.admin;
 
 import com.google.appengine.api.datastore.Key;
+import org.apache.tapestry5.annotations.InjectPage;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import uk.co.gidley.projectView.dao.Site;
+import uk.co.gidley.projectView.pages.admin.ViewSite;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
@@ -20,6 +22,9 @@ public class SitesAdmin {
 	@Property
 	private Site site;
 
+	@InjectPage
+	private ViewSite viewSite;
+
 
 	public List<Site> getSites() {
 		Query query = persistenceManager.newQuery(Site.class);
@@ -29,5 +34,11 @@ public class SitesAdmin {
 
 	void onActionFromDelete(Key key) {
 		persistenceManager.deletePersistent(persistenceManager.getObjectById(Site.class, key));
+	}
+
+	Object onActionFromAdd(){
+		Site site = new Site();
+		viewSite.setSite(site);
+		return viewSite;
 	}
 }

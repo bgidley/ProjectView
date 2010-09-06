@@ -1,8 +1,9 @@
 Tapestry.Initializer.initialiseSiteTabs = function(clientId) {
     $(clientId).frames = new Array();
 
-    $(clientId).addFrame = function (frameId) {
+    $(clientId).addFrame = function (frameId, refresh) {
         $(clientId).frames.push(frameId);
+        frameId.isRefresh = refresh;
     };
 
 
@@ -29,7 +30,14 @@ function showFrame(clientId, offset) {
     if (tabs.currentTab != null){
         framesList[tabs.currentTab].hide();
     }
-    framesList[offset].show();
+
+
+    var nextFrame = framesList[offset];
+    if (nextFrame.isRefresh){
+        nextFrame.src = nextFrame.src;
+    }
+    nextFrame.setStyle({height : document.viewport.getHeight()});
+    nextFrame.show();
     tabs.currentTab = offset;
 }
 

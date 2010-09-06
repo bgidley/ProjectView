@@ -3,6 +3,7 @@ package uk.co.gidley.projectView.dao;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.Link;
 import org.apache.tapestry5.beaneditor.NonVisual;
+import org.apache.tapestry5.beaneditor.Width;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
@@ -23,6 +24,7 @@ public class Site {
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
 	private Key key;
 
+	@Width(125)
 	@Persistent
 	private Link link;
 

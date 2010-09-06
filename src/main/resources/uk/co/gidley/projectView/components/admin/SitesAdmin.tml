@@ -1,8 +1,8 @@
 <div xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
-    <t:grid source="sites" row="site" add="delete">
-        <p:buildLinkCell>
-            <t:pagelink page="admin/viewSite" context="${site.key}">${site.link}</t:pagelink>
-        </p:buildLinkCell>
+    <t:grid source="sites" row="site" add="delete, edit">
+        <p:editCell>
+           <t:pagelink page="admin/viewSite" context="${site.key}">Edit</t:pagelink>
+        </p:editCell>
         <p:deletecell>
             <t:actionlink t:id="delete" context="${site.key}">Delete</t:actionlink>
         </p:deletecell>
@@ -12,6 +12,6 @@
     </t:grid>
 
     <p>You can
-        <t:pagelink page="admin/viewSite">add some</t:pagelink>
+        <t:actionlink t:id="add" >add some</t:actionlink>
     </p>
 </div>

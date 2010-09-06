@@ -3,6 +3,7 @@ package uk.co.gidley.projectView.pages.admin;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.Link;
 import org.apache.commons.lang.StringUtils;
+import org.apache.tapestry5.PersistenceConstants;
 import org.apache.tapestry5.ValidationException;
 import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
@@ -17,7 +18,6 @@ import javax.jdo.PersistenceManager;
 public class ViewSite {
 
 	@Persist
-	@Property
 	private Site site;
 
 	@Inject
@@ -28,8 +28,9 @@ public class ViewSite {
 		site = persistenceManager.detachCopy(persistenceManager.getObjectById(Site.class, key));
 	}
 
-	public void onSuccess() {
+	public Object onSuccess() {
 		persistenceManager.makePersistent(site);
+		return Index.class;
 	}
 
 	String onToClientFromLink() {
@@ -47,4 +48,11 @@ public class ViewSite {
 		site.setLink(new Link(value));
 	}
 
+	public void setSite(Site site) {
+		this.site = site;
+	}
+
+	public Site getSite() {
+		return site;
+	}
 }

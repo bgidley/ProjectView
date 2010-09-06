@@ -41,6 +41,7 @@ public class SiteFrame {
 		JSONObject parameters = new JSONObject();
 		parameters.put("clientId", getClientId());
 		parameters.put("tabsId", tabsId);
+		parameters.put("refresh", site.getRefresh());
 		renderSupport.addInitializerCall("initialiseSiteFrame", parameters);
 	}
 
